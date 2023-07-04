@@ -11,6 +11,14 @@ import static org.hamcrest.CoreMatchers.*;
 @QuarkusTest
 public class CityResourceE2E {
     @Test
+    public void testHealthCheckEndpoint() {
+        given()
+                .when().get("/_health")
+                .then()
+                .statusCode(200);
+    }
+
+    @Test
     public void testFindAllEndpoint() {
         given()
                 .when().get("/city")
