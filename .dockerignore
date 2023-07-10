@@ -1,4 +1,5 @@
-*
+#What the fuck quarkus what are you doing with the dockerignore.
+#*
 !build/*-runner
 !build/*-runner.jar
 !build/lib/*

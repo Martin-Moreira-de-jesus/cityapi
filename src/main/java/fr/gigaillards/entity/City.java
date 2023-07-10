@@ -1,8 +1,11 @@
 package fr.gigaillards.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.NamedQuery;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.GeneratedValue;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
 
 @Entity
 @NamedQuery(name = "City.findAll", query = "SELECT c FROM City c")

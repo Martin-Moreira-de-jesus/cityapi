@@ -1,12 +1,14 @@
 package fr.gigaillards.city;
 
 import fr.gigaillards.entity.City;
+import io.netty.handler.codec.http.HttpResponseStatus;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.http.ContentType;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.is;
 
 @QuarkusTest
 public class CityResourceE2E {
@@ -15,17 +17,20 @@ public class CityResourceE2E {
         given()
                 .when().get("/city")
                 .then()
-                .statusCode(200);
+                .statusCode(HttpResponseStatus.OK.code());
     }
 
     @Test
     public void testCreateOneEndpoint() {
+        float longitude = 12f;
+        float latitude = 8f;
         City newCity = new City();
-        newCity.setLon(12f);
-        newCity.setLat(8f);
+        newCity.setLon(longitude);
+        newCity.setLat(latitude);
         newCity.setName("Aubagne");
         newCity.setZipCode("13400");
-        newCity.setDepartmentCode("13");;
+        newCity.setDepartmentCode("13");
+
 
         given()
                 .when()
@@ -35,7 +40,7 @@ public class CityResourceE2E {
                 .body(newCity)
                 .post("/city")
                 .then()
-                .statusCode(201)
+                .statusCode(HttpResponseStatus.CREATED.code())
                 .body("id", notNullValue())
                 .body("name", is(newCity.getName()))
                 .body("zipCode", is(newCity.getZipCode()))

@@ -1,0 +1,29 @@
+FROM ghcr.io/graalvm/graalvm-ce:ol9-java17 as builder
+
+# Add native image support
+RUN gu install native-image
+
+# Copy the source files
+COPY ./ /opt/build
+WORKDIR /opt/build
+
+
+# Build the app, without tests
+RUN ./gradlew build -Dquarkus.package.type=native -x test
+
+
+
+FROM debian:bookworm-slim as runner
+
+RUN mkdir -p "/opt/app"
+COPY --from=builder /opt/build/build/*-runner /opt/app
+
+WORKDIR /opt/app
+
+
+
+
+
+
+
+
